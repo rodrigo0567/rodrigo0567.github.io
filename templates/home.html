@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-vindo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+</head>
+<body>
+    <header>
+        <h1>Bem-vindo ao meu convite de aniversário!</h1>
+    </header>
+    <div class="content">
+        <div class="question">
+            <h2>Qual minha cor favorita?</h2>
+        </div>
+        <div class="options">
+            <form method="POST" action="/validate_answer">
+                <button type="submit" name="answer" value="Azul">Azul</button>
+                <button type="submit" name="answer" value="Preto">Preto</button>
+                <button type="submit" name="answer" value="Roxo">Roxo</button>
+            </form>
+        </div>
+        <footer>
+            <p>&copy; 2025 Convite de Veríssimo</p>
+        </footer>
+    </div>
+
+    <!-- Modal de erro -->
+    <div id="errorModal">
+        <div id="errorModalContent">
+            <p>Boy, como pode errar isso?</p>
+            <button onclick="closeModal()">Fechar</button>
+        </div>
+    </div>
+
+    <script>
+        // Script para exibir e fechar o modal
+        function showModal() {
+            document.getElementById('errorModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('errorModal').style.display = 'none';
+        }
+
+        // Verifica se deve exibir o modal
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('error') === 'true') {
+            showModal();
+        }
+    </script>
+</body>
+</html>

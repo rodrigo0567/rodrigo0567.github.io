@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>20tão do Digão</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main-page.css') }}">
+    <style>
+        /* Adicionando espaçamento entre as seções e ajustando o layout */
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+
+        .info-container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .info-box {
+            text-align: center;
+            margin: 0 15px;
+        }
+
+        .info-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+
+        #map {
+            width: 100%;
+            height: 350px;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎉 20tão do Digão 🎉</h1>
+    </header>
+    <div class="content">
+        <b><p>Você está convidado para a minha festa de aniversário!</p></b>
+        
+        <!-- Containers com ícones em cima e informações embaixo -->
+        <div class="info-container">
+            <!-- Container de Local -->
+            <div class="info-box">
+                <img src="static/images/calendar-icon.png" alt="Local" class="info-icon">
+                <p><strong>Local:</strong> Recepção do Loteamento Nice</p>
+            </div>
+
+            <!-- Container de Hora -->
+            <div class="info-box">
+                <img src="static/images/clock-icon.png" alt="Hora" class="info-icon">
+                <p><strong>Horário:</strong> às 10:00</p>
+            </div>
+
+            <!-- Container de Observação de Bebida -->
+            <div class="info-box">
+                <img src="static/images/drink-icon.png" alt="Observação Bebida" class="info-icon">
+                <p>Teremos algumas bebidas, mas traga também bebida a sua preferência.</p>
+            </div>
+        </div>
+
+        <!-- Mapa -->
+        <div id="map" class="map">
+            <iframe
+            src="https://www.google.com/maps?q=-7.1261,-34.9857&z=15&output=embed"
+            width="600"
+            height="450"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy">
+        </iframe>
+
+        
+
+        
+                </div>
+
+        <a href="/confirm" class="confirm-button">Confirmar Presença</a>
+    </div>
+    <footer>
+        <p>&copy; 2025 Convite de Veríssimo</p>
+    </footer>
+</body>
+</html>

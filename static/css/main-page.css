@@ -1,0 +1,137 @@
+/* Tela Principal */
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    background: #f0f0f0;
+    color: #333;
+}
+
+header {
+    background: linear-gradient(90deg, #000, #0056b3);
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+}
+
+h2 {
+    background: linear-gradient(90deg, #0056b3, #000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+}
+
+.content {
+    text-align: center;
+    margin: auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 100%; /* Removido o limite de largura */
+    height: 100%;   /* Ajuste para ocupar toda a altura */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Adicionando o estilo para os containers */
+.info-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
+    gap: 30px; /* Espaçamento maior entre os containers */
+}
+
+.info-box {
+    background: linear-gradient(90deg, #000, #0056b3); /* Degradê azul */
+    color: white;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    width: 30%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+/* Estilo do ícone */
+/* Estilo do ícone */
+.info-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 10px;
+    animation: rotate-icon 3s ease-in-out forwards; /* Altere a animação para durar 3 segundos */
+}
+
+/* Efeito de rotação no ícone */
+@keyframes rotate-icon {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* Outros estilos do conteúdo */
+.info-box p {
+    font-size: 1.1rem;
+}
+
+/* Garantindo que a página seja responsiva */
+@media (max-width: 768px) {
+    .info-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px; /* Menos espaçamento em telas pequenas */
+    }
+
+    .info-box {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+}
+
+
+
+.map {
+    height: 300px;
+    margin: 20px auto;
+}
+
+.confirm-button,
+.back-button {
+    display: inline-block;
+    margin: 20px auto;
+    background: #0056b3;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    text-align: center;
+    width: auto;
+}
+
+.confirm-button:hover,
+.back-button:hover {
+    background: #003d80;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    background-color: #032351;
+    padding: 10px 0;
+    font-size: 1rem;
+    color: #ffffff; 
+}
+
+footer p {
+    margin: 0;
+}
