@@ -101,27 +101,34 @@ def save_confirmation():
         worksheet.append_row([name])  # Adiciona o nome na próxima linha da planilha
     return redirect(url_for('main'))
 
+@app.route('/login')
+def login():
+    auth_url = sp.auth_manager.get_authorize_url()
+    return redirect(auth_url)
+
+@app.route('/callback')
+def callback():
+    token_info = sp.auth_manager.get_access_token(request.args['code'])
+    session['token_info'] = token_info  # Armazena o token na sessão
+    return redirect(url_for('add_music'))
+
 @app.route('/add_music', methods=['GET', 'POST'])
 def add_music():
     if request.method == 'POST':
         music_name = request.form['music']
         
-        # Verifica se o usuário tem token válido
         if 'token_info' in session:
             try:
-                # Obtém o token da sessão
                 token_info = session['token_info']
-                sp = spotipy.Spotify(auth=token_info['access_token'])  # Cria a instância do cliente Spotify com o token
+                sp = spotipy.Spotify(auth=token_info['access_token'])
 
                 results = sp.search(q=music_name, type='track', limit=1)
                 if results['tracks']['items']:
                     track_uri = results['tracks']['items'][0]['uri']
                     playlist_id = os.getenv('PLAYLIST_ID')
                     sp.playlist_add_items(playlist_id, [track_uri])
-                    # Redireciona para /add_music com status de sucesso
                     return redirect(url_for('add_music', status='success'))
                 else:
-                    # Se a música não for encontrada, redireciona com status de erro
                     return redirect(url_for('add_music', status='error'))
             except Exception as e:
                 print(f"Erro: {e}")
@@ -129,24 +136,8 @@ def add_music():
         else:
             return redirect(url_for('add_music', status='error'))
     else:
-        # Renderiza o formulário e passa o status para o template
         return render_template('add_music.html', status=request.args.get('status'))
 
-    
-@app.route('/callback')
-def callback():
-    # Recupera o código de autorização do Spotify
-    token_info = sp.auth_manager.get_access_token(request.args['code'])
-    session['token_info'] = token_info  # Armazena o token na sessão
-    return redirect(url_for('add_music'))
-
-
-
-@app.route('/login')
-def login():
-    # A URL de redirecionamento do Spotify será definida aqui
-    auth_url = sp.auth_manager.get_authorize_url()
-    return redirect(auth_url)
 
 @app.route('/add_photos', methods=['GET', 'POST'])
 def add_photos():
