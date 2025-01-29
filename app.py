@@ -33,12 +33,12 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID,
 
 
 creds = Credentials.from_service_account_file(
-    os.getenv('SHEETS_INVITE'),
+    'convite-446020-4f64e2aab3d5.json',
     scopes=["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
 )
 
 client = gspread.authorize(creds)
-spreadsheet = client.open(os.getenv('INVITE_NAME'))  
+spreadsheet = client.open('CONVIDADOS CONFIRMADOS')  
 worksheet = spreadsheet.get_worksheet(0) 
 questions = [
     {
