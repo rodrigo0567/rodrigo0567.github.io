@@ -7,7 +7,7 @@ from spotipy.oauth2 import SpotifyOAuth
 from werkzeug.utils import secure_filename
 import os
 from dotenv import load_dotenv
-
+import json
 load_dotenv()
 
 app = Flask(__name__)
@@ -32,10 +32,9 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID,
                                                 scope=SCOPE))
 
 
-creds = Credentials.from_service_account_file(
-    'convite-446020-19e29e9aa887.json',
-    scopes=["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
-)
+creds_json = json.loads(os.getenv("GOOGLE_CREDENTIALS_JSON"))
+creds = Credentials.from_service_account_info(creds_json, scopes=["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"])
+
 
 client = gspread.authorize(creds)
 spreadsheet = client.open('CONVIDADOS CONFIRMADOS')  
