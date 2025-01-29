@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Adicionar Fotos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>📸 Adicione fotos do evento 📸</h1>
+    </header>
+    <div class="content">
+        <form method="POST" action="/add_photos" enctype="multipart/form-data">
+            <label for="photo">Escolha uma foto:</label>
+            <input type="file" id="photo" name="photo" accept="image/*" required>
+            <button type="submit">Adicionar Foto</button>
+        </form>
+        <a href="/main" class="back-button">Voltar</a>
+    </div>
+
+    <div class="photo-gallery">
+        {% for photo in photos %}
+            <div class="photo-item">
+                <img src="{{ url_for('static', filename='uploads/' + photo) }}" alt="Foto do Evento">
+            </div>
+        {% endfor %}
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Veríssimo</p>
+    </footer>
+</body>
+</html>

@@ -65,6 +65,8 @@ h2 {
     cursor: pointer;
     text-align: center;
     width: auto;
+    text-decoration: none;
+
 }
 
 .confirm-button:hover,
@@ -189,4 +191,52 @@ footer p {
         padding: 8px 16px;
         font-size: 0.9rem;
     }
+}
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+}
+
+.modal-content {
+    background-color: #333;
+    padding: 15px;
+    border-radius: 8px;
+}
+.toast {
+    display: none; /* Inicialmente escondido */
+    position: fixed;
+    top: 20px; /* Distância do topo da página */
+    right: 20px; /* Distância da direita da página */
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    z-index: 1000; /* Garante que a caixinha fique acima de outros conteúdos */
+}
+
+.toast.success {
+    background-color: green; /* Cor de fundo para sucesso */
+}
+
+.toast.error {
+    background-color: red; /* Cor de fundo para erro */
+}
+.photo-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
+.photo-gallery img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
 }

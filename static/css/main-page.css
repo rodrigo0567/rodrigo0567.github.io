@@ -113,9 +113,11 @@ h2 {
     cursor: pointer;
     text-align: center;
     width: auto;
+    text-decoration: none;
 }
 
 .confirm-button:hover,
+
 .back-button:hover {
     background: #003d80;
 }
@@ -134,4 +136,22 @@ footer {
 
 footer p {
     margin: 0;
+}
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+}
+
+.modal-content {
+    background-color: #333;
+    padding: 15px;
+    border-radius: 8px;
 }

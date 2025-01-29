@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bem-vindo</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    
 </head>
 <body>
     <header>
@@ -13,13 +12,14 @@
     </header>
     <div class="content">
         <div class="question">
-            <h2>Qual minha cor favorita?</h2>
+            <h2>{{ question.question }}</h2>
         </div>
         <div class="options">
             <form method="POST" action="/validate_answer">
-                <button type="submit" name="answer" value="Azul">Azul</button>
-                <button type="submit" name="answer" value="Preto">Preto</button>
-                <button type="submit" name="answer" value="Roxo">Roxo</button>
+                <input type="hidden" name="question" value="{{ question.question }}">
+                {% for option in question.options %}
+                    <button type="submit" name="answer" value="{{ option }}">{{ option }}</button>
+                {% endfor %}
             </form>
         </div>
         <footer>
@@ -28,7 +28,7 @@
     </div>
 
     <!-- Modal de erro -->
-    <div id="errorModal">
+    <div id="errorModal" style="display: none;">
         <div id="errorModalContent">
             <p>Boy, como pode errar isso?</p>
             <button onclick="closeModal()">Fechar</button>
@@ -36,7 +36,6 @@
     </div>
 
     <script>
-        // Script para exibir e fechar o modal
         function showModal() {
             document.getElementById('errorModal').style.display = 'flex';
         }
@@ -45,7 +44,6 @@
             document.getElementById('errorModal').style.display = 'none';
         }
 
-        // Verifica se deve exibir o modal
         const params = new URLSearchParams(window.location.search);
         if (params.get('error') === 'true') {
             showModal();

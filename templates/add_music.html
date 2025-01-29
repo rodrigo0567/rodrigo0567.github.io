@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Adicionar Músicas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .status-label {
+            padding: 10px;
+            margin-top: 15px; /* Coloca a label um pouco abaixo do input */
+            text-align: center;
+            font-size: 16px;
+            border-radius: 5px;
+            background-color: #007bff; /* Cor azul */
+            color: white;
+            visibility: hidden; /* Inicialmente invisível */
+            opacity: 0; /* Inicialmente invisível */
+            transition: opacity 1s ease-out; /* Transição suave para desaparecer */
+        }
+
+        .status-visible {
+            visibility: visible; /* Torna a label visível */
+            opacity: 1; /* Torna a label totalmente visível */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎵 Adicione músicas à Playlist 🎵</h1>
+    </header>
+    <div class="content">
+        {% if 'token_info' not in session %}
+        <p><a href="{{ url_for('login') }}">Faça login com o Spotify</a></p>
+        {% else %}
+        <form method="POST" action="/add_music">
+            <label for="music">Nome da música:</label>
+            <input type="text" id="music" name="music" required>
+            <button type="submit">Adicionar à Playlist</button>
+        </form>
+        {% endif %}
+        
+        <!-- Status message -->
+        {% if status %}
+        <div id="statusLabel" class="status-label status-visible">
+            {% if status == 'success' %}
+                Música adicionada à playlist!
+            {% elif status == 'error' %}
+                Música não encontrada.
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <a href="/main" class="back-button">Voltar</a>
+    </div>
+    <footer>
+        <p>&copy; 2025 Veríssimo</p>
+    </footer>
+
+    <script>
+        // Faz a label desaparecer após 5 segundos
+        setTimeout(function() {
+            var statusLabel = document.getElementById('statusLabel');
+            statusLabel.classList.remove('status-visible');
+        }, 5000);
+    </script>
+</body>
+</html>
