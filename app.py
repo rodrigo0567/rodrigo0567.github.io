@@ -33,7 +33,7 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID,
 
 
 creds = Credentials.from_service_account_file(
-    'convite-446020-4f64e2aab3d5.json',
+    'convite-446020-19e29e9aa887.json',
     scopes=["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
 )
 
