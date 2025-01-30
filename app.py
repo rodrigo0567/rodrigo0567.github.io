@@ -103,40 +103,43 @@ def save_confirmation():
 
 @app.route('/login')
 def login():
+    if 'token_info' in session:
+        if sp.auth_manager.is_token_expired(session['token_info']):
+            session['token_info'] = sp.auth_manager.refresh_access_token(session['token_info']['refresh_token'])
+        return redirect(url_for('add_music')) 
     auth_url = sp.auth_manager.get_authorize_url()
     return redirect(auth_url)
 
-@app.route('/callback')
-def callback():
-    token_info = sp.auth_manager.get_access_token(request.args['code'])
-    session['token_info'] = token_info  # Armazena o token na sessão
-    return redirect(url_for('add_music'))
 
 @app.route('/add_music', methods=['GET', 'POST'])
 def add_music():
+    if 'token_info' not in session:
+        return redirect(url_for('login'))  # Se não há token, redireciona para login
+
+    # Garante que o token esteja atualizado antes de fazer qualquer requisição
+    token_info = session['token_info']
+    if sp.auth_manager.is_token_expired(token_info):
+        session['token_info'] = sp.auth_manager.refresh_access_token(token_info['refresh_token'])
+
+    sp_client = spotipy.Spotify(auth=session['token_info']['access_token'])
+
     if request.method == 'POST':
         music_name = request.form['music']
-        
-        if 'token_info' in session:
-            try:
-                token_info = session['token_info']
-                sp = spotipy.Spotify(auth=token_info['access_token'])
 
-                results = sp.search(q=music_name, type='track', limit=1)
-                if results['tracks']['items']:
-                    track_uri = results['tracks']['items'][0]['uri']
-                    playlist_id = os.getenv('PLAYLIST_ID')
-                    sp.playlist_add_items(playlist_id, [track_uri])
-                    return redirect(url_for('add_music', status='success'))
-                else:
-                    return redirect(url_for('add_music', status='error'))
-            except Exception as e:
-                print(f"Erro: {e}")
-                return f"Ocorreu um erro: {e}"
-        else:
-            return redirect(url_for('add_music', status='error'))
-    else:
-        return render_template('add_music.html', status=request.args.get('status'))
+        try:
+            results = sp_client.search(q=music_name, type='track', limit=1)
+            if results['tracks']['items']:
+                track_uri = results['tracks']['items'][0]['uri']
+                playlist_id = os.getenv('PLAYLIST_ID')
+                sp_client.playlist_add_items(playlist_id, [track_uri])
+                return redirect(url_for('add_music', status='success'))
+            else:
+                return redirect(url_for('add_music', status='error'))
+        except Exception as e:
+            print(f"Erro: {e}")
+            return f"Ocorreu um erro: {e}"
+    
+    return render_template('add_music.html', status=request.args.get('status'))
 
 
 @app.route('/add_photos', methods=['GET', 'POST'])
