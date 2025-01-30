@@ -115,19 +115,19 @@ def login():
 
 @app.route('/callback')
 def callback():
-    # Captura o código da URL após o usuário autenticar
     code = request.args.get('code')
 
     if not code:
         return "Erro: Código de autenticação não recebido.", 400
 
-    # Troca o código pelo token de acesso
+    print("Código recebido:", code)  # Adiciona um log
+
     token_info = sp.auth_manager.get_access_token(code)
 
-    # Armazena o token na sessão
-    session['token_info'] = token_info
+    if not token_info:
+        return "Erro ao obter o token de acesso.", 400
 
-    # Redireciona para a página de adicionar músicas
+    session['token_info'] = token_info
     return redirect(url_for('add_music'))
 
 
