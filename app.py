@@ -103,18 +103,38 @@ def save_confirmation():
 
 @app.route('/login')
 def login():
+    # Se o token já existe e não está expirado, redireciona para /add_music
     if 'token_info' in session:
-        if sp.auth_manager.is_token_expired(session['token_info']):
-            session['token_info'] = sp.auth_manager.refresh_access_token(session['token_info']['refresh_token'])
-        return redirect(url_for('add_music')) 
+        if not sp.auth_manager.is_token_expired(session['token_info']):
+            return redirect(url_for('add_music'))
+
+    # Gera a URL de autenticação do Spotify e redireciona
     auth_url = sp.auth_manager.get_authorize_url()
     return redirect(auth_url)
+
+
+@app.route('/callback')
+def callback():
+    # Captura o código da URL após o usuário autenticar
+    code = request.args.get('code')
+
+    if not code:
+        return "Erro: Código de autenticação não recebido.", 400
+
+    # Troca o código pelo token de acesso
+    token_info = sp.auth_manager.get_access_token(code)
+
+    # Armazena o token na sessão
+    session['token_info'] = token_info
+
+    # Redireciona para a página de adicionar músicas
+    return redirect(url_for('add_music'))
 
 
 @app.route('/add_music', methods=['GET', 'POST'])
 def add_music():
     if 'token_info' not in session:
-        return redirect(url_for('login'))  # Se não há token, redireciona para login
+        return redirect(url_for('login'))
 
     # Garante que o token esteja atualizado antes de fazer qualquer requisição
     token_info = session['token_info']
