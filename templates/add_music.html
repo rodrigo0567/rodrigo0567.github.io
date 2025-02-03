@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <title>Adicionar Músicas</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <style>
         .status-label {
@@ -28,17 +29,17 @@
         <h1>🎵 Adicione músicas à Playlist 🎵</h1>
     </header>
     <div class="content">
-        {% if 'token_info' not in session %}
-        <p><a href="{{ url_for('login') }}">Faça login com o Spotify</a></p>
-        {% else %}
         <form method="POST" action="/add_music">
-            <label for="music">Nome da música:</label>
+            <label for="music">Nome da Música:</label>
             <input type="text" id="music" name="music" required>
+        
+            <label for="artist">Nome do Artista:</label>
+            <input type="text" id="artist" name="artist" required>
+        
             <button type="submit">Adicionar à Playlist</button>
         </form>
-        {% endif %}
         
-        <!-- Status message -->
+
         {% if status %}
         <div id="statusLabel" class="status-label status-visible">
             {% if status == 'success' %}
