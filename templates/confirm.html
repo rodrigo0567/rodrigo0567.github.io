@@ -13,6 +13,12 @@
     </header>
     <div class="content">
         <h2>Confirmação de Presença</h2>
+        {% if success %}
+            <div class="confirmation-message">
+                ✅ Presença confirmada com sucesso, {{ name }}! Nos vemos na festa! 🎊
+            </div>
+        {% endif %}
+
         <form method="POST" action="/save_confirmation">
             <label for="name">Seu Nome:</label>
             <input type="text" id="name" name="name" placeholder="Digite seu nome" required>

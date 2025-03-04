@@ -99,9 +99,12 @@ def save_confirmation():
     if name:
         # Enviar o nome para a planilha
         worksheet.append_row([name])  # Adiciona o nome na próxima linha da planilha
-    return redirect(url_for('main'))
+    return redirect(url_for('main', status='confirmed'))
 
 
+@app.route('/lista')
+def lista():
+    return render_template('lista.html')
 
 @app.route('/add_music', methods=['GET', 'POST'])
 def add_music():
